@@ -1,0 +1,11 @@
+.git
+.github
+**/node_modules/
+**/dist/
+**/target/
+**/bin/
+.classpath
+.project
+.settings/
+*.log
+.DS_Store

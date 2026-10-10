@@ -1,0 +1,123 @@
+.main-layout {
+  min-height: 100vh;
+  background-color: #0b0f19;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(11, 15, 25, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0 40px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: 72px;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.logo-badge {
+  background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  color: #fff;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+}
+
+.logo-text {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.5px;
+}
+
+.menu {
+  background: transparent !important;
+  border-bottom: none !important;
+  line-height: 72px;
+}
+
+.menu .ant-menu-item {
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: all 0.3s ease !important;
+  padding: 0 20px !important;
+}
+
+.menu .ant-menu-item:hover,
+.menu .ant-menu-item-selected {
+  color: #818cf8 !important;
+  background: transparent !important;
+}
+
+.menu .ant-menu-item-selected::after {
+  border-bottom-color: #6366f1 !important;
+  border-bottom-width: 3px !important;
+}
+
+.content {
+  background: #0b0f19;
+  min-height: calc(100vh - 72px);
+}
+
+.footer {
+  text-align: center;
+  background: #070a12;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.6);
+  padding: 32px 24px;
+}
+
+.floating-buttons {
+  position: fixed;
+  bottom: 36px;
+  right: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  z-index: 1000;
+}
+
+.float-btn {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  width: 54px !important;
+  height: 54px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+.float-btn:hover {
+  transform: translateY(-4px) scale(1.05);
+}
+
+.call-btn {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+  border: none !important;
+}
+
+.wa-btn {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+  border: none !important;
+}
+

@@ -1,0 +1,23 @@
+# Node / Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+frontend/*.local
+frontend/.env
+frontend/.env.*.local
+
+# Java / Maven / Backend
+backend/target/
+backend/bin/
+backend/.classpath
+backend/.project
+backend/.settings/
+backend/data/
+backend/media/
+backend/.mvn/wrapper/maven-wrapper.jar
+
+# Logs and OS
+**/logs/
+**/*.log
+.DS_Store
+Thumbs.db

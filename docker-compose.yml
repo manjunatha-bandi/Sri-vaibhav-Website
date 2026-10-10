@@ -1,0 +1,22 @@
+services:
+  srivaibhav-website:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: srivaibhav-website
+    ports:
+      - "8081:8081"
+    environment:
+      - PORT=8081
+      # Optional: set MySQL URL if using external MySQL, otherwise uses embedded database
+      # - SPRING_DATASOURCE_URL=jdbc:mysql://host.docker.internal:3306/srivaibhav_db?createDatabaseIfNotExist=true
+      # - SPRING_DATASOURCE_USERNAME=root
+      # - SPRING_DATASOURCE_PASSWORD=root
+    volumes:
+      - website_data:/app/data
+      - website_media:/app/media
+    restart: unless-stopped
+
+volumes:
+  website_data:
+  website_media:
