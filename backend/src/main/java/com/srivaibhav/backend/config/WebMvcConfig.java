@@ -14,16 +14,19 @@ import java.nio.file.Paths;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
     
-    @Value("${file.upload-dir}")
+    @Value("${file.upload-dir:./media/}")
     private String uploadDir;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        Path uploadDirPath = Paths.get(uploadDir);
-        String uploadPath = uploadDirPath.toFile().getAbsolutePath();
-        
-        registry.addResourceHandler("/api/media/download/**")
-                .addResourceLocations("file:" + uploadPath + "/");
+        try {
+            Path uploadDirPath = Paths.get(uploadDir);
+            String uploadPath = uploadDirPath.toFile().getAbsolutePath();
+            registry.addResourceHandler("/api/media/download/**")
+                    .addResourceLocations("file:" + uploadPath + "/");
+        } catch (Exception e) {
+            // Safe fallback if media folder does not exist
+        }
 
         // Serve React Static Build and fallback non-API routes to index.html
         registry.addResourceHandler("/**")

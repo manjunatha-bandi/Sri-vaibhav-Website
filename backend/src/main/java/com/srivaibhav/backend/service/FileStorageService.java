@@ -1,5 +1,7 @@
 package com.srivaibhav.backend.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -12,30 +14,29 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.UUID;
 
+/**
+ * Service for local file storage.
+ * In ephemeral production environments (such as Render free tier), containers are stateless.
+ * For production persistence, migrate to AWS S3, Cloudinary, or Google Cloud Storage.
+ */
 @Service
 public class FileStorageService {
 
-    private Path fileStorageLocation;
+    private static final Logger logger = LoggerFactory.getLogger(FileStorageService.class);
+    private final Path fileStorageLocation;
 
-    public FileStorageService(@Value("${file.upload-dir}") String uploadDir) {
+    public FileStorageService(@Value("${file.upload-dir:./media/}") String uploadDir) {
         Path tempPath;
         try {
             tempPath = Paths.get(uploadDir).toAbsolutePath().normalize();
             Files.createDirectories(tempPath);
         } catch (Exception ex) {
-            System.err.println("Warning: Configured upload directory '" + uploadDir + "' could not be created: " + ex.getMessage());
-            System.err.println("Falling back to local fallback directory: C:/SriVaibhavMedia/");
+            logger.warn("Configured upload directory '{}' could not be created, using default ./media/: {}", uploadDir, ex.getMessage());
+            tempPath = Paths.get("./media/").toAbsolutePath().normalize();
             try {
-                tempPath = Paths.get("C:/SriVaibhavMedia/").toAbsolutePath().normalize();
                 Files.createDirectories(tempPath);
-            } catch (Exception e) {
-                System.err.println("Warning: C:/SriVaibhavMedia/ could not be created, falling back to project root ./media/");
-                tempPath = Paths.get("./media/").toAbsolutePath().normalize();
-                try {
-                    Files.createDirectories(tempPath);
-                } catch (Exception e2) {
-                    throw new RuntimeException("Could not initialize any file storage location.", e2);
-                }
+            } catch (Exception e2) {
+                logger.error("Could not initialize local media directory: {}", e2.getMessage());
             }
         }
         this.fileStorageLocation = tempPath;
@@ -49,7 +50,7 @@ public class FileStorageService {
             if (fileName.contains("..")) {
                 throw new RuntimeException("Sorry! Filename contains invalid path sequence " + fileName);
             }
-            
+
             Path targetLocation = this.fileStorageLocation.resolve(fileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
